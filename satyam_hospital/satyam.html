@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Satyam Hospital & ICU</title>
+    <link rel="icon" href="../SATYAM LOGO.png" type="image/png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Sidebar */
+      #sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: #007bff;
+        padding: 1rem;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: left 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+        text-align: center;
+      }
+
+      .sidebar-logo {
+        width: 150px;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 20px auto;
+      }
+
+      #sidebar h2 {
+        color: white;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      #sidebar nav a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin: 10px 0;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 8px 12px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      #sidebar nav a:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Fixed Header (Navbar) */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 998;
+        background-color: #007bff;
+        height: 80px;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: nowrap;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      #sidebarToggle {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        margin-right: 1rem;
+        padding: 5px 8px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      #sidebarToggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      header img {
+        width: 110px;
+        height: 70px;
+        object-fit: contain;
+      }
+
+      header h1 {
+        font-size: 1.7rem;
+        font-style: italic;
+        color: white;
+        flex-grow: 1;
+      }
+
+      nav {
+        text-align: right;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 8px 14px;
+        border-radius: 5px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+      }
+
+      nav a:hover {
+        background-color: rgb(104, 90, 229);
+      }
+
+      .login-btn a {
+        background-color: rgb(104, 90, 229);
+        color: white;
+        padding: 11px 22px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 1.15rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .login-btn a:hover {
+        background-color: rgb(54, 38, 184);
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(54, 38, 184, 0.5);
+      }
+
+      /* Main content spacing for fixed header */
+      main {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 100px 1rem 0 1rem; /* Top padding accounts for fixed header */
+      }
+
+      section {
+        background-color: white;
+        padding: 20px 25px;
+        margin-bottom: 25px;
+        border-radius: 6px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      }
+
+      section h2 {
+        margin-bottom: 15px;
+        color: #007bff;
+        text-align: center;
+      }
+
+      ul.services-list {
+        list-style-type: disc;
+        margin-left: 2rem;
+        font-size: 1.1rem;
+      }
+
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      form label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      form input,
+      form select {
+        padding: 8px 10px;
+        font-size: 1rem;
+        border: 1.5px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      form input[type="radio"] {
+        width: auto;
+        margin-right: 5px;
+      }
+
+      form .gender-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      form button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      form button:hover {
+        background-color: #0056b3;
+      }
+
+      .contact-info p,
+      .address-info p {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+
+      .photo-gallery {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .photo-gallery img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .photo-gallery img:hover {
+        transform: scale(1.05);
+      }
+
+      footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 15px 10px;
+      }
+
+      footer button {
+        margin-top: 10px;
+        background-color: #007bff;
+        border: none;
+        padding: 10px 18px;
+        font-size: 1rem;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      footer button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 700px) {
+        header {
+          flex-direction: column;
+          text-align: center;
+          height: auto;
+          padding: 1rem 2rem;
+        }
+
+        header h1 {
+          margin: 1rem 0;
+        }
+
+        nav a {
+          font-size: 1rem;
+          margin: 5px 6px;
+          padding: 6px 10px;
+        }
+
+        .photo-gallery {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .photo-gallery img {
+          width: 90vw;
+          height: auto;
+        }
+
+        form {
+          width: 100%;
+        }
+
+        .login-btn {
+          margin-top: 1rem;
+        }
+
+        #sidebar {
+          width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div id="sidebar" role="navigation" aria-label="Sidebar menu">
+      <img
+        src="/SATYAM LOGO.png"
+        alt="Satyam Hospital Logo"
+        class="sidebar-logo"
+      />
+      <h2>Sidebar Menu</h2>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#appointment">Book Appointment</a>
+        <a href="#contact">Contact</a>
+        <a href="#photos">Photos</a>
+        <a href="#address">Address</a>
+      </nav>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <button id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+      <img src="/SATYAM LOGO.png" alt="Satyam Hospital Logo" />
+      <h1>Satyam Hospital & ICU</h1>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#appointment">Book Appointment</a>
+        <a href="#contact">Contact</a>
+        <a href="#photos">Photos</a>
+        <a href="#address">Address</a>
+      </nav>
+      <div class="login-btn">
+        <a href="./login.html">Login</a>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <section id="about">
+        <h2>About Us</h2>
+        <p>
+          Welcome to <strong>Satyam Hospital & ICU</strong>, where your health
+          is our priority. Our expert team of doctors and state-of-the-art
+          facilities ensure compassionate and top-quality care at all times.
+        </p>
+      </section>
+
+      <section id="services">
+        <h2>Our Services</h2>
+        <ul class="services-list">
+          <li>24/7 Emergency Services</li>
+          <li>Outpatient Consultation</li>
+          <li>Diagnostic Laboratory</li>
+          <li>Advanced Surgical Procedures</li>
+          <li>ICU & Critical Care</li>
+          <li>Pharmacy & Ambulance Service</li>
+        </ul>
+      </section>
+
+      <section id="appointment">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm" action="./fromdata.html">
+          <label for="name">Full Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Your full name"
+          />
+          <label for="phone">Mobile Number *</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            placeholder="+91 99999 99999"
+            pattern="[0-9]{10,15}"
+          />
+          <label for="caseNumber">Case Number</label>
+          <input
+            type="text"
+            id="caseNumber"
+            name="caseNumber"
+            placeholder="Your case number (if any)"
+          />
+          <label for="appointmentDate">Appointment Date *</label>
+          <input
+            type="date"
+            id="appointmentDate"
+            name="appointmentDate"
+            required
+          />
+          <label for="appointmentTime">Appointment Time *</label>
+          <input
+            type="time"
+            id="appointmentTime"
+            name="appointmentTime"
+            required
+          />
+          <label>Gender *</label>
+          <div class="gender-group">
+            <label
+              ><input type="radio" name="gender" value="Male" required />
+              Male</label
+            >
+            <label
+              ><input type="radio" name="gender" value="Female" /> Female</label
+            >
+            <label
+              ><input type="radio" name="gender" value="Other" /> Other</label
+            >
+          </div>
+          <label for="city">Hospital City *</label>
+          <select id="city" name="city" required>
+            <option value="" disabled selected>Select city</option>
+            <option value="Veraval">Veraval</option>
+            <option value="Junagadh">Junagadh</option>
+            <option value="Rajkot">Rajkot</option>
+          </select>
+          <label for="age">Age *</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            min="0"
+            max="120"
+            required
+            placeholder="Your age"
+          />
+          <label for="guardianName">Guardian Name *</label>
+          <input
+            type="text"
+            id="guardianName"
+            name="guardianName"
+            required
+            placeholder="Guardian's full name"
+          />
+          <label for="address">Full Address *</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            required
+            placeholder="Your full address"
+          />
+          <button>Book Now</button>
+        </form>
+      </section>
+
+      <section id="contact" class="contact-info">
+        <h2>Contact Us</h2>
+        <p>Phone: +91 12345 67890</p>
+        <p>Email: info@satyamhospital.com</p>
+      </section>
+
+      <section id="photos" class="photo-gallery">
+        <h2>Our Facilities</h2>
+        <img src="./img_1.jpg" alt="Hospital Entrance" />
+        <img src="./img_2.jpg" alt="ICU Ward" />
+        <img src="./img_3.jpg" alt="Surgery Room" />
+      </section>
+
+      <section id="address" class="address-info">
+        <h2>Our Location</h2>
+        <p>123 Health Street, Veraval, Gujarat, India</p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 Satyam Hospital & ICU. All rights reserved.</p>
+      <button>Need Help? Contact Us</button>
+    </footer>
+
+    <script>
+      // Set today's date as min for appointment
+      const dateInput = document.getElementById("appointmentDate");
+      if (dateInput) {
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+      }
+
+      // Sidebar toggle
+      const toggleBtn = document.getElementById("sidebarToggle");
+      const sidebar = document.getElementById("sidebar");
+
+      toggleBtn.addEventListener("click", () => {
+        if (sidebar.style.left === "0px") {
+          sidebar.style.left = "-250px";
+        } else {
+          sidebar.style.left = "0px";
+        }
+      });
+    </script>
+  </body>
+</html>
